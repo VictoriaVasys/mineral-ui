@@ -74,6 +74,18 @@ export default {
     slug: 'card-title',
     title: 'CardTitle'
   },
+  checkbox: {
+    description:
+      'Checkboxes allows users to select one or more options from a list. Use Checkboxes to accept multiple choice input from a user.',
+    slug: 'checkbox',
+    title: 'Checkbox'
+  },
+  'checkbox-group': {
+    description:
+      'CheckboxGroup allows users to construct a group of Checkboxes and provides a simpler API than working with Checkbox directly',
+    slug: 'checkbox-group',
+    title: 'CheckboxGroup'
+  },
   dropdown: {
     description:
       'Dropdowns display a hidden Menu, available upon user interaction. Use Dropdowns for non-primary actions only.',
