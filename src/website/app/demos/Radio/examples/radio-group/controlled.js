@@ -16,7 +16,7 @@
 
 /* @flow */
 import { Component } from 'react';
-import Radio, { RadioGroup } from '../../../../../../Radio';
+import { RadioGroup } from '../../../../../../Radio';
 import DemoForm from '../../components/DemoForm';
 
 export default {
@@ -24,7 +24,7 @@ export default {
   title: 'Controlled',
   description: `Provide the \`checked\` prop and an \`onChange\` handler to
 create a controlled component.`,
-  scope: { Component, DemoForm, Radio, RadioGroup },
+  scope: { Component, DemoForm, RadioGroup },
   source: `
   () => {
     class MyForm extends Component {
@@ -48,7 +48,7 @@ create a controlled component.`,
         return (
           <DemoForm>
             <RadioGroup
-              name="minerals"
+              name="mineral"
               onChange={this.handleChange}
               checked={this.state.value}
               data={[

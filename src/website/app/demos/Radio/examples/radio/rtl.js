@@ -16,6 +16,7 @@
 
 /* @flow */
 import { ThemeProvider } from '../../../../../../themes';
+import { FormFieldDivider } from '../../../../../../Form';
 import Radio from '../../../../../../Radio';
 import DemoForm from '../../components/DemoForm';
 
@@ -28,12 +29,14 @@ export default {
   id: 'rtl',
   title: 'Bidirectionality',
   description: `Radios support right-to-left (RTL) languages.`,
-  scope: { DemoForm, Radio, ThemeProvider },
+  scope: { DemoForm, FormFieldDivider, Radio, ThemeProvider },
   source: `
     <div dir="rtl">
       <ThemeProvider theme={{ direction: 'rtl' }}>
         <DemoForm>
           <Radio name="example" label="مرحبا بالعالم"  defaultChecked />
+          <FormFieldDivider />
+          <Radio name="example" label="مرحبا بالعالم"  controlPosition="end" />
         </DemoForm>
       </ThemeProvider>
     </div>`

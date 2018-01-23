@@ -80,5 +80,25 @@ make assumptions about your users choices.`,
         />
       </DemoForm>
     )
+  },
+  {
+    type: 'dont',
+    description: `Don't use when the user should be able to select multiple
+options. Use a [Checkbox](../checkbox) instead.`,
+    example: (
+      <DemoForm>
+        <FormField
+          input={RadioGroup}
+          name="wants"
+          label="What do you want in a component library?"
+          defaultChecked="none"
+          data={[
+            { label: 'Simplicity', value: 'simplicity' },
+            { label: 'Quality', value: 'quality' },
+            { label: 'Speed', value: 'speed' }
+          ]}
+        />
+      </DemoForm>
+    )
   }
 ];

@@ -159,7 +159,7 @@ export default {
   },
   'radio-group': {
     description:
-      'RadioGroup allows users to select a single option from a set.  Use a RadioGroup for a simpler API than working with Radios directly.',
+      'RadioGroup allows users to construct a group of Radios and provides a simpler API than working with Radio directly',
     slug: 'radio-group',
     title: 'RadioGroup'
   },

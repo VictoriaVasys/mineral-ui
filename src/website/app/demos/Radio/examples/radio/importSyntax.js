@@ -19,7 +19,7 @@ export default {
   id: 'import-syntax',
   title: 'Import Syntax',
   description: `\`\`\`
-import Radio, { RadioGroup } from 'mineral-ui/Radio';
+import Radio from 'mineral-ui/Radio';
 \`\`\`
 
 <Callout title="Note">

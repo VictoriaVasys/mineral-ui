@@ -24,7 +24,7 @@ export default {
   id: 'label-wrapping',
   title: 'Label Wrapping',
   description: `This example demonstrates how the text of a long label will wrap
-in relation to the position of the Radio.`,
+in relation to the position of the control.`,
   scope: { DemoForm, loremIpsum, Radio },
   source: `
     <DemoForm>

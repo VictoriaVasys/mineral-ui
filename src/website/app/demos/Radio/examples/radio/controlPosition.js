@@ -17,17 +17,19 @@
 /* @flow */
 import DemoForm from '../../components/DemoForm';
 import Radio from '../../../../../../Radio';
+import { FormFieldDivider } from '../../../../../../Form';
 
 export default {
-  id: 'invalid',
-  title: 'Invalid',
-  description: `The \`invalid\` prop on a Radio does nothing visually on its
-own, but is important for accessibility.`,
-  scope: { DemoForm, Radio },
+  id: 'control-position',
+  title: 'Control Position',
+  description: `Use the \`controlPosition\` prop to adjust the position of the
+control relative to the label.`,
+  scope: { DemoForm, FormFieldDivider, Radio },
   source: `
     <DemoForm>
-      <Radio name="mineral" label="Quartz" value="quartz" defaultChecked invalid />
-      <Radio name="mineral" label="Magnetite" value="magnetite" invalid />
+      <Radio name="mineral" label="Quartz" value="quartz" defaultChecked />
+      <FormFieldDivider />
+      <Radio name="mineral" label="Magnetite" value="magnetite" controlPosition="end" />
     </DemoForm>
   `
 };

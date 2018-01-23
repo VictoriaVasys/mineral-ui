@@ -16,6 +16,7 @@
 
 /* @flow */
 import controlled from './controlled';
+import controlPosition from './controlPosition';
 import disabled from './disabled';
 import importSyntax from './importSyntax';
 import inputRef from './inputRef';
@@ -36,6 +37,7 @@ export default [
   required,
   invalid,
   sizes,
+  controlPosition,
   labelWrapping,
   inputRef,
   rtl,

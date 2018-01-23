@@ -29,18 +29,17 @@ and other features as well as a more streamlined API.`,
     <DemoForm>
       <FormField
         input={RadioGroup}
-        label="Contact Method"
+        label="What is your preferred contact method?"
         caption="We promise not to spam you."
         name="contact"
-        defaultChecked="text"
+        defaultChecked="none"
         required
         data={[
           { label: 'Email', value: 'email' },
           { label: 'Telephone', value: 'telephone' },
           { label: 'Text message', value: 'text' },
           { label: 'None', value: 'none' }
-        ]}
-      />
+        ]} />
     </DemoForm>
   `
 };
