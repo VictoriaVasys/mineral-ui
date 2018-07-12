@@ -6,7 +6,7 @@ import composeEventHandlers from '../utils/composeEventHandlers';
 
 type Props = {
   /** Accessible label */
-  ariaLabel: string,
+  'aria-label': string,
   /**
    * Index or array of indices of the selected [Button(s)](/components/button).
    * Primarily for use with controlled components with a `mode` prop defined.
@@ -228,7 +228,6 @@ export default class ButtonGroup extends Component<Props, State> {
 
   render() {
     const {
-      ariaLabel,
       children,
       disabled,
       fullWidth,
@@ -240,7 +239,6 @@ export default class ButtonGroup extends Component<Props, State> {
       ...restProps
     } = this.props;
     const rootProps = {
-      'aria-label': ariaLabel,
       disabled,
       fullWidth,
       mode,
