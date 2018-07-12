@@ -1,7 +1,7 @@
 /* @flow */
 import React, { Children, Component, cloneElement } from 'react';
 import { createStyledComponent } from '../styles';
-import { toArray } from '../utils/collections';
+import { setFromArray, toArray } from '../utils/collections';
 import composeEventHandlers from '../utils/composeEventHandlers';
 
 type Props = {
@@ -41,7 +41,7 @@ type Props = {
 };
 
 type State = {
-  checked: number | Array<number> | void
+  checked: Set<number>
 };
 
 export const componentTheme = (baseTheme: Object) => ({
@@ -171,42 +171,41 @@ const styles = ({ fullWidth, theme: baseTheme, vertical }) => {
   };
 };
 
-const isChecked = (checked: number | Array<number>, index) => {
-  return Array.isArray(checked)
-    ? checked.indexOf(index) !== -1
-    : checked === index;
+const isChecked = (checked: number | Array<number> | Set<number>, index) => {
+  const isSet = checked instanceof Set;
+  const checkedSet = isSet ? checked : setFromArray(toArray(checked));
+  // $FlowFixMe - Refinement to Set not working
+  return checkedSet.has(index);
 };
 
-const findDefaultChecked = (props: Props) => {
-  const { children, mode } = props;
+const getDefaultCheckedState = (props: Props) => {
+  const { children: _children, defaultChecked, mode } = props;
+  const children = Children.toArray(_children);
 
-  let checked: number | Array<number> | void = [];
+  if (mode && defaultChecked !== undefined) {
+    const defaultCheckedArray = toArray(defaultChecked);
+    const checked =
+      mode === 'checkbox' ? defaultCheckedArray : [defaultCheckedArray[0]];
+    return setFromArray(checked);
+  }
 
-  const addDefaultIndex = (index) => {
-    if (Array.isArray(checked)) {
-      checked.push(index);
-    }
-  };
+  const checked: Set<number> = new Set();
 
-  if (mode === 'checkbox') {
-    if (children && Array.isArray(children)) {
-      children.map((button, index) => {
-        if (button.props.defaultChecked && Array.isArray(checked)) {
-          addDefaultIndex(index);
-        }
-      });
-    }
-  } else {
-    if (children && Array.isArray(children)) {
-      const button = children.find((button) => {
-        return button.props.defaultChecked;
-      });
-      const index = children.indexOf(button);
+  children.forEach((child, index) => {
+    if (mode === 'checkbox') {
+      if (child.props.defaultChecked) {
+        checked.add(index);
+      }
+    } else if (mode === 'radio') {
+      const selectedChild = children.find(
+        (child) => child.props.defaultChecked
+      );
+      const index = children.indexOf(selectedChild);
       if (index !== -1) {
-        checked = [index];
+        checked.add(index);
       }
     }
-  }
+  });
 
   return checked;
 };
@@ -225,7 +224,7 @@ export default class ButtonGroup extends Component<Props, State> {
   static displayName = 'ButtonGroup';
 
   state = {
-    checked: this.props.defaultChecked || findDefaultChecked(this.props) || -1
+    checked: getDefaultCheckedState(this.props)
   };
 
   render() {
@@ -250,8 +249,7 @@ export default class ButtonGroup extends Component<Props, State> {
     };
     const checked = this.getControllableValue('checked');
     const buttons = Children.map(children, (child, index) => {
-      const isChildToggleable =
-        (mode === 'radio' || mode === 'checkbox') && true;
+      const isChildToggleable = mode;
       const isChildChecked = isChecked(checked, index);
 
       return cloneElement(child, {
@@ -286,26 +284,22 @@ export default class ButtonGroup extends Component<Props, State> {
     const { currentTarget: target } = event;
 
     if (this.isControlled('checked')) {
-      this.clickActions(event);
+      this.clickActions(event, true);
     } else {
-      let changed = true;
+      let changed;
       this.setState(
         (prevState) => {
           let checked;
           if (mode === 'checkbox') {
-            checked = toArray(prevState.checked);
-            const i = checked.indexOf(
-              parseInt(target.getAttribute('data-index'))
-            );
-            const hasValue = i !== -1;
-            if (checked && !hasValue) {
-              checked.push(parseInt(target.getAttribute('data-index')));
-            } else if (hasValue) {
-              checked.splice(i, 1);
-            }
+            changed = true;
+            checked = prevState.checked;
+            const dataIndex = parseInt(target.getAttribute('data-index'));
+            checked.has(dataIndex)
+              ? checked.delete(dataIndex)
+              : checked.add(dataIndex);
           } else {
-            checked = parseInt(target.getAttribute('data-index'));
-            changed = toArray(prevState.checked)[0] !== checked;
+            checked = setFromArray([index]);
+            changed = [...prevState.checked][0] !== [...checked][0];
           }
 
           return { checked };
@@ -319,7 +313,7 @@ export default class ButtonGroup extends Component<Props, State> {
 
   clickActions = (
     event: SyntheticEvent<HTMLButtonElement>,
-    changed: boolean = true
+    changed: boolean
   ) => {
     const { onChange, onClick } = this.props;
 
