@@ -13,7 +13,7 @@ export default [
     description: `Where space allows, add text to accompany icons in order to
   clarify purpose.`,
     example: (
-      <ButtonGroup aria-label="File Actions">
+      <ButtonGroup ariaLabel="File Actions">
         <Button iconStart={<IconAdd />}>Add</Button>
         <Button iconStart={<IconDelete />}>Delete</Button>
         <Button iconStart={<IconArchive />}>Archive</Button>
@@ -24,7 +24,7 @@ export default [
     type: 'dont',
     description: `Don't use ButtonGroup for unrelated buttons.`,
     example: (
-      <ButtonGroup aria-label="Mixed-use Actions">
+      <ButtonGroup ariaLabel="Mixed-use Actions">
         <Button>Go Back</Button>
         <Button>Edit</Button>
         <Button>Favorite</Button>
@@ -36,7 +36,7 @@ export default [
     description: `Don't use long words or more than three words to describe a
   ButtonGroup Button; instead, be as descriptive and concise as possible.`,
     example: (
-      <ButtonGroup aria-label="Lengthy Actions">
+      <ButtonGroup ariaLabel="Lengthy Actions">
         <Button>Save</Button>
         <Button>Invalidate/Disentangle</Button>
         <Button>Click To View Previous Changes</Button>
@@ -49,13 +49,13 @@ export default [
     example: (
       <Flex marginTop="-1rem" wrap>
         <FlexItem marginTop="1rem">
-          <ButtonGroup size="small" aria-label="Small Buttons" mode="radio">
+          <ButtonGroup size="small" ariaLabel="Small Buttons" mode="radio">
             <Button defaultChecked>List</Button>
             <Button>Grid</Button>
           </ButtonGroup>
         </FlexItem>
         <FlexItem marginTop="1rem">
-          <ButtonGroup aria-label="Default Buttons" mode="radio">
+          <ButtonGroup ariaLabel="Default Buttons" mode="radio">
             <Button defaultChecked>Light</Button>
             <Button>Dark</Button>
           </ButtonGroup>
@@ -67,7 +67,7 @@ export default [
     type: 'dont',
     description: `Don't use ButtonGroups for navigation; use tabs instead.`,
     example: (
-      <ButtonGroup aria-label="Galaxies">
+      <ButtonGroup ariaLabel="Galaxies">
         <Button>Home</Button>
         <Button>Blog</Button>
         <Button>Photos</Button>

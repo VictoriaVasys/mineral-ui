@@ -8,7 +8,7 @@ export default {
   description: `ButtonGroups stylistically group a set of buttons together.`,
   scope: { Button, ButtonGroup },
   source: `
-    <ButtonGroup aria-label="Edit text">
+    <ButtonGroup ariaLabel="Edit text">
       <Button>Cut</Button>
       <Button>Copy</Button>
       <Button>Paste</Button>

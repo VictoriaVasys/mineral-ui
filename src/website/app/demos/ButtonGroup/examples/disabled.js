@@ -12,13 +12,13 @@ individual children.`,
   scope: { Button, ButtonGroup, DemoLayout },
   source: `
     <DemoLayout>
-      <ButtonGroup disabled aria-label="Edit text">
+      <ButtonGroup disabled ariaLabel="Edit text">
         <Button>Cut</Button>
         <Button>Copy</Button>
         <Button>Paste</Button>
       </ButtonGroup>
 
-      <ButtonGroup aria-label="Edit text">
+      <ButtonGroup ariaLabel="Edit text">
         <Button disabled>Cut</Button>
         <Button>Copy</Button>
         <Button>Paste</Button>
@@ -26,7 +26,7 @@ individual children.`,
 
       <ButtonGroup
         disabled
-        aria-label="Align text"
+        ariaLabel="Align text"
         defaultChecked={0}
         mode="radio">
         <Button>Left</Button>
@@ -34,7 +34,7 @@ individual children.`,
         <Button>Right</Button>
       </ButtonGroup>
 
-      <ButtonGroup aria-label="Align text" defaultChecked={0} mode="radio">
+      <ButtonGroup ariaLabel="Align text" defaultChecked={0} mode="radio">
         <Button>Left</Button>
         <Button>Center</Button>
         <Button disabled>Right</Button>

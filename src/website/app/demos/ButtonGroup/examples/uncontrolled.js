@@ -13,7 +13,7 @@ based on the zero-indexed collection of nested Buttons) or on individual
 children (where the value is a boolean).`,
   scope: { Button, ButtonGroup },
   source: `
-    <ButtonGroup aria-label="Align text" mode="radio">
+    <ButtonGroup ariaLabel="Align text" mode="radio">
       <Button defaultChecked>Left</Button>
       <Button>Center</Button>
       <Button>Right</Button>

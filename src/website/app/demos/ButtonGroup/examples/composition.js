@@ -42,7 +42,7 @@ composed in a ButtonGroup, though they are incompatible with the \`mode\` prop.`
   },
   source: `
     <FixedWidthLayout>
-      <ButtonGroup aria-label="Optional compositions">
+      <ButtonGroup ariaLabel="Optional compositions">
         <Button>Button</Button>
         <Tooltip content="Lorem ipsum dolor sit amet">
           <Button>Tooltip</Button>

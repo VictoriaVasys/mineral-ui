@@ -33,31 +33,31 @@ just as they do in [Button](/components/button#icons)`,
   },
   source: `
     <DemoLayout>
-      <ButtonGroup aria-label="Align text" mode="radio">
+      <ButtonGroup ariaLabel="Align text" mode="radio">
         <Button defaultChecked iconStart={<IconFormatAlignLeft />}>Left</Button>
         <Button iconStart={<IconFormatAlignCenter />}>Center</Button>
         <Button iconStart={<IconFormatAlignRight />}>Right</Button>
       </ButtonGroup>
 
-      <ButtonGroup aria-label="Format text" mode="checkbox">
-        <Button iconEnd={<IconFormatBold />} aria-label="Bold" />
-        <Button iconEnd={<IconFormatItalic />} aria-label="Italic" />
-        <Button iconEnd={<IconFormatUnderlined />} aria-label="Underlined" />
+      <ButtonGroup ariaLabel="Format text" mode="checkbox">
+        <Button iconEnd={<IconFormatBold />} ariaLabel="Bold" />
+        <Button iconEnd={<IconFormatItalic />} ariaLabel="Italic" />
+        <Button iconEnd={<IconFormatUnderlined />} ariaLabel="Underlined" />
       </ButtonGroup>
 
-      <ButtonGroup aria-label="Sentiments" mode="radio">
+      <ButtonGroup ariaLabel="Sentiments" mode="radio">
         <Button
           variant="success"
           iconEnd={<IconSentimentSatisfied />}
-          aria-label="Satisfied" />
+          ariaLabel="Satisfied" />
         <Button
           variant="warning"
           iconEnd={<IconSentimentNeutral />}
-          aria-label="Neutral" />
+          ariaLabel="Neutral" />
         <Button
           variant="danger"
           iconEnd={<IconSentimentDissatisfied />}
-          aria-label="Unsatisfied" />
+          ariaLabel="Unsatisfied" />
       </ButtonGroup>
     </DemoLayout>
   `

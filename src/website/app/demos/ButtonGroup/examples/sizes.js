@@ -19,14 +19,14 @@ export default {
       <DemoLayout>
         {
           sizes.map((size) => (
-            <ButtonGroup size={size} aria-label="Edit text" key={size}>
+            <ButtonGroup size={size} ariaLabel="Edit text" key={size}>
               <Button>Cut</Button>
               <Button>Copy</Button>
               <Button>Paste</Button>
             </ButtonGroup>
           ))
         }
-        <ButtonGroup fullWidth aria-label="Edit text">
+        <ButtonGroup fullWidth ariaLabel="Edit text">
           <Button>Cut</Button>
           <Button>Copy</Button>
           <Button>Paste</Button>

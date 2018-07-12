@@ -14,7 +14,7 @@ export default {
     <DemoLayout>
       <ButtonGroup
         mode="radio"
-        aria-label="Align text"
+        ariaLabel="Align text"
         defaultChecked={0}>
         <Button>Left</Button>
         <Button>Center</Button>
@@ -22,7 +22,7 @@ export default {
       </ButtonGroup>
       <ButtonGroup
         mode="checkbox"
-        aria-label="Text Decoration"
+        ariaLabel="Text Decoration"
         defaultChecked={[0, 1]}>
         <Button>Bold</Button>
         <Button>Italic</Button>

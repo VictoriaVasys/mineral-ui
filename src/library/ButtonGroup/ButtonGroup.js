@@ -1,12 +1,12 @@
 /* @flow */
 import React, { Children, Component, cloneElement } from 'react';
 import { createStyledComponent } from '../styles';
-import { setFromArray, toArray } from '../utils/collections';
+import { toArray } from '../utils/collections';
 import composeEventHandlers from '../utils/composeEventHandlers';
 
 type Props = {
   /** Accessible label */
-  'aria-label': string,
+  ariaLabel: string,
   /**
    * Index or array of indices of the selected [Button(s)](/components/button).
    * Primarily for use with controlled components with a `mode` prop defined.
@@ -39,7 +39,7 @@ type Props = {
 };
 
 type State = {
-  checked: Set<number>
+  checked: number | Array<number> | void
 };
 
 export const componentTheme = (baseTheme: Object) => ({
@@ -136,41 +136,42 @@ const styles = ({ fullWidth, theme: baseTheme }) => {
   };
 };
 
-const isChecked = (checked: number | Array<number> | Set<number>, index) => {
-  const isSet = checked instanceof Set;
-  const checkedSet = isSet ? checked : setFromArray(toArray(checked));
-  // $FlowFixMe - Refinement to Set not working
-  return checkedSet.has(index);
+const isChecked = (checked: number | Array<number>, index) => {
+  return Array.isArray(checked)
+    ? checked.indexOf(index) !== -1
+    : checked === index;
 };
 
-const getDefaultCheckedState = (props: Props) => {
-  const { children: _children, defaultChecked, mode } = props;
-  const children = Children.toArray(_children);
+const findDefaultChecked = (props: Props) => {
+  const { children, mode } = props;
 
-  if (mode && defaultChecked !== undefined) {
-    const defaultCheckedArray = toArray(defaultChecked);
-    const checked =
-      mode === 'checkbox' ? defaultCheckedArray : [defaultCheckedArray[0]];
-    return setFromArray(checked);
-  }
+  let checked: number | Array<number> | void = [];
 
-  const checked: Set<number> = new Set();
+  const addDefaultIndex = (index) => {
+    if (Array.isArray(checked)) {
+      checked.push(index);
+    }
+  };
 
-  children.forEach((child, index) => {
-    if (mode === 'checkbox') {
-      if (child.props.defaultChecked) {
-        checked.add(index);
-      }
-    } else if (mode === 'radio') {
-      const selectedChild = children.find(
-        (child) => child.props.defaultChecked
-      );
-      const index = children.indexOf(selectedChild);
+  if (mode === 'checkbox') {
+    if (children && Array.isArray(children)) {
+      children.map((button, index) => {
+        if (button.props.defaultChecked && Array.isArray(checked)) {
+          addDefaultIndex(index);
+        }
+      });
+    }
+  } else {
+    if (children && Array.isArray(children)) {
+      const button = children.find((button) => {
+        return button.props.defaultChecked;
+      });
+      const index = children.indexOf(button);
       if (index !== -1) {
-        checked.add(index);
+        checked = [index];
       }
     }
-  });
+  }
 
   return checked;
 };
@@ -181,19 +182,18 @@ const Root = createStyledComponent('div', styles, {
 });
 
 /**
- * ButtonGroup allows authors to stylistically group a set of related
- * [Buttons](/components/button) or construct a group of selectable Buttons that
- * behave like [Radios](/components/radio) or [Checkboxes](/components/checkbox).
+ * ButtonGroup allows authors to group Buttons.
  */
 export default class ButtonGroup extends Component<Props, State> {
   static displayName = 'ButtonGroup';
 
   state = {
-    checked: getDefaultCheckedState(this.props)
+    checked: this.props.defaultChecked || findDefaultChecked(this.props) || -1
   };
 
   render() {
     const {
+      ariaLabel,
       children,
       disabled,
       fullWidth,
@@ -204,6 +204,7 @@ export default class ButtonGroup extends Component<Props, State> {
       ...restProps
     } = this.props;
     const rootProps = {
+      'aria-label': ariaLabel,
       disabled,
       fullWidth,
       mode,
@@ -212,7 +213,8 @@ export default class ButtonGroup extends Component<Props, State> {
     };
     const checked = this.getControllableValue('checked');
     const buttons = Children.map(children, (child, index) => {
-      const isChildToggleable = mode;
+      const isChildToggleable =
+        (mode === 'radio' || mode === 'checkbox') && true;
       const isChildChecked = isChecked(checked, index);
 
       return cloneElement(child, {
@@ -247,22 +249,26 @@ export default class ButtonGroup extends Component<Props, State> {
     const { currentTarget: target } = event;
 
     if (this.isControlled('checked')) {
-      this.clickActions(event, true);
+      this.clickActions(event);
     } else {
-      let changed;
+      let changed = true;
       this.setState(
         (prevState) => {
           let checked;
           if (mode === 'checkbox') {
-            changed = true;
-            checked = prevState.checked;
-            const dataIndex = parseInt(target.getAttribute('data-index'));
-            checked.has(dataIndex)
-              ? checked.delete(dataIndex)
-              : checked.add(dataIndex);
+            checked = toArray(prevState.checked);
+            const i = checked.indexOf(
+              parseInt(target.getAttribute('data-index'))
+            );
+            const hasValue = i !== -1;
+            if (checked && !hasValue) {
+              checked.push(parseInt(target.getAttribute('data-index')));
+            } else if (hasValue) {
+              checked.splice(i, 1);
+            }
           } else {
-            checked = setFromArray([index]);
-            changed = [...prevState.checked][0] !== [...checked][0];
+            checked = parseInt(target.getAttribute('data-index'));
+            changed = toArray(prevState.checked)[0] !== checked;
           }
 
           return { checked };
@@ -276,7 +282,7 @@ export default class ButtonGroup extends Component<Props, State> {
 
   clickActions = (
     event: SyntheticEvent<HTMLButtonElement>,
-    changed: boolean
+    changed: boolean = true
   ) => {
     const { onChange, onClick } = this.props;
 

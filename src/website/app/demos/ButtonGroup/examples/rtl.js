@@ -24,7 +24,7 @@ reversed when the \`direction\` theme variable is set to \`rtl\`. A subset of
   source: `
     <div dir="rtl">
       <ThemeProvider theme={{ direction: 'rtl' }}>
-        <ButtonGroup aria-label="Format text" mode="checkbox">
+        <ButtonGroup ariaLabel="Format text" mode="checkbox">
           <Button iconEnd={<IconFormatBold />}>بالخط العريض</Button>
           <Button iconEnd={<IconFormatItalic />}>مائل</Button>
           <Button iconEnd={<IconFormatUnderlined />}>أكد</Button>

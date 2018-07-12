@@ -40,7 +40,7 @@ create a controlled component.`,
         return (
           <DemoLayout>
             <ButtonGroup
-              aria-label="Align text"
+              ariaLabel="Align text"
               checked={this.state.checked}
               onChange={this.handleChange}
               mode="radio">
