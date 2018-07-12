@@ -217,7 +217,9 @@ const Root = createStyledComponent('div', styles, {
 });
 
 /**
- * ButtonGroup allows authors to group Buttons.
+ * ButtonGroup allows authors to stylistically group a set of related
+ * [Buttons](/components/button) or construct a group of selectable Buttons that
+ * behave like [Radios](/components/radio) or [Checkboxes](/components/checkbox).
  */
 export default class ButtonGroup extends Component<Props, State> {
   static displayName = 'ButtonGroup';
